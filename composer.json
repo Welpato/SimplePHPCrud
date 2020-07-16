@@ -1,0 +1,18 @@
+{
+    "name": "wosorio/simple-crud",
+    "authors": [
+        {
+            "name": "Wesley Osorio",
+            "email": "wesleyfosorio@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2.27",
+        "doctrine/orm": "2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "SimplePhpCrud\\": "src/"
+        }
+    }
+}
