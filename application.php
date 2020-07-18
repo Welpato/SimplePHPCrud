@@ -8,11 +8,12 @@ use \SimplePhpCrud\EventSubscribers\ClienteSubscriber;
 require_once "vendor/autoload.php";
 require_once "bootstrap.php";
 
-$entityManager->getEventManager()->addEventSubscriber(new ClienteSubscriber());
+$entityManager->getEventManager()
+              ->addEventSubscriber(new ClienteSubscriber());
 $clienteBusinessCase = new ClienteBusinessCase($entityManager);
 
 $running = true;
-while ($running){
+while ($running) {
     print "Olá! Escolha uma das seguintes opções:\n
     0 - Sair da aplicação.
     1 - Cadastrar/atualizar um cliente.
@@ -21,7 +22,7 @@ while ($running){
     $handle = fopen("php://stdin", "r");
     $value = trim(fgets($handle));
     fclose($handle);
-    switch ($value){
+    switch ($value) {
         case 0:
             $running = false;
             break;
@@ -38,5 +39,4 @@ while ($running){
             echo 'Opção inválida!';
             break;
     }
-
 }

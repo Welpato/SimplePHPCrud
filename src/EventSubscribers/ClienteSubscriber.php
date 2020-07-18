@@ -28,21 +28,24 @@ class ClienteSubscriber implements EventSubscriber
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args){
+    public function postPersist(LifecycleEventArgs $args)
+    {
         $this->insertLog(Log::CHANGE_TYPE_INSERT, $args);
     }
 
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function postUpdate(LifecycleEventArgs $args){
+    public function postUpdate(LifecycleEventArgs $args)
+    {
         $this->insertLog(Log::CHANGE_TYPE_UPDATE, $args);
     }
 
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function postRemove(LifecycleEventArgs $args){
+    public function postRemove(LifecycleEventArgs $args)
+    {
         $this->insertLog(Log::CHANGE_TYPE_REMOVE, $args);
     }
 
@@ -60,7 +63,8 @@ class ClienteSubscriber implements EventSubscriber
         $log->setUserId(1);
         $log->setChangedDb('cliente');
         $log->setChangeType($logType);
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = SerializerBuilder::create()
+                                       ->build();
         $logChange = $serializer->serialize($entity, 'json');
         $log->setChange($logChange);
 

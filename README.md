@@ -15,6 +15,11 @@ E a partir disso para inicie a aplicação através do comando:
 
 ```php aplication.php```
 
+Caso alguma alteração seja realizada você pode tambêm checar se seu código está seguindo 
+os padrões PSR2 através do comando:
+
+```composer run phpcs```
+
 ## Requerimentos
 - PHP ^7.2.27
 - Doctrine 2.7

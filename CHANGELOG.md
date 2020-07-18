@@ -1,3 +1,10 @@
+# v1.2.0
+
+    2020-07-18 Wesley Osorio
+    
+        * Adding phpcs to check for PSR2 code standards
+        * Fixing PSR2 errors
+
 # v1.1.0
 
     2020-07-18 Wesley Osorio

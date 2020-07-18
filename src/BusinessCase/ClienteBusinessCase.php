@@ -72,7 +72,7 @@ class ClienteBusinessCase
     public function findClient(): void
     {
         $message = "Pesquisar cliente por:\n";
-        foreach($this->fieldsToFill as $index => $field){
+        foreach ($this->fieldsToFill as $index => $field) {
             $message .= sprintf("%s - %s\n", $index, $field['label']);
         }
 
@@ -88,9 +88,9 @@ class ClienteBusinessCase
 
         try {
             $result = $this->repository->findBy($criteria);
-            if(!empty($result)){
+            if (!empty($result)) {
                 $this->printTable($result);
-            }else {
+            } else {
                 print "\nDados não encontrados!\n\n";
             }
         } catch (QueryException $e) {
@@ -113,7 +113,7 @@ class ClienteBusinessCase
         if (null === $value) {
             return;
         }
-        $cliente = New Cliente();
+        $cliente = new Cliente();
         switch ($value) {
             case 0:
             case 1:
@@ -121,11 +121,12 @@ class ClienteBusinessCase
                 break;
             default:
                 print "Campo inválido!\n";
+
                 return;
                 break;
         }
 
-        if(null === $criteria){
+        if (null === $criteria) {
             return;
         }
 
@@ -141,7 +142,7 @@ class ClienteBusinessCase
     }
 
     /**
-     * @param string $message
+     * @param string   $message
      * @param callable $validationFunction
      * @param callable $setFunction
      *
@@ -195,7 +196,7 @@ class ClienteBusinessCase
     private function generateCriteria(int $fieldIndex, ?Cliente &$clienteEntity = null): ?Criteria
     {
         $criteria = Criteria::create();
-        if(null === $clienteEntity){
+        if (null === $clienteEntity) {
             $clienteEntity = new Cliente();
         }
         $checkInput = $this->getCreateInput(
@@ -221,7 +222,7 @@ class ClienteBusinessCase
     private function printTable(array $table): void
     {
         print implode(' | ', array_keys($table[0])) . "\n";
-        foreach($table as $row){
+        foreach ($table as $row) {
             print implode(' | ', $row) . "\n";
         }
         print "\n";

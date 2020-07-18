@@ -17,6 +17,7 @@ class ClienteValidation
     public static function isValidNomeCompleto(string $nomeCompleto): bool
     {
         $lenNome = strlen($nomeCompleto);
+
         return $lenNome >= 3 && $lenNome <= 150;
     }
 
@@ -61,12 +62,10 @@ class ClienteValidation
      */
     public static function isValidTelefone(?string $telefone): bool
     {
-        if(empty($telefone)){
+        if (empty($telefone)) {
             return true;
         }
 
         return is_numeric($telefone) && strlen($telefone) === 11;
     }
-
-
 }
