@@ -113,11 +113,11 @@ class ClienteBusinessCase
         if (null === $value) {
             return;
         }
-
+        $cliente = New Cliente();
         switch ($value) {
             case 0:
             case 1:
-                $criteria = $this->generateCriteria((int)$value);
+                $criteria = $this->generateCriteria((int)$value, $cliente);
                 break;
             default:
                 print "Campo inválido!\n";
@@ -130,7 +130,7 @@ class ClienteBusinessCase
         }
 
         try {
-            if ($this->repository->deleteBy($criteria)) {
+            if ($this->repository->deleteBy($criteria, $cliente)) {
                 print "Cliente deletado com sucesso!\n";
             } else {
                 print "Erro ao deletar o cliente.\n";
@@ -186,14 +186,18 @@ class ClienteBusinessCase
     }
 
     /**
-     * @param int $fieldIndex
+     * @param int                                $fieldIndex
+     *
+     * @param \SimplePhpCrud\Entity\Cliente|null $clienteEntity
      *
      * @return \Doctrine\Common\Collections\Criteria|null
      */
-    private function generateCriteria(int $fieldIndex): ?Criteria
+    private function generateCriteria(int $fieldIndex, ?Cliente &$clienteEntity = null): ?Criteria
     {
         $criteria = Criteria::create();
-        $clienteEntity = new Cliente();
+        if(null === $clienteEntity){
+            $clienteEntity = new Cliente();
+        }
         $checkInput = $this->getCreateInput(
             sprintf(self::INSERT_BASE_MESSAGE, $this->fieldsToFill[$fieldIndex]['label']),
             [ClienteValidation::class, sprintf('isValid%s', $this->fieldsToFill[$fieldIndex]['fieldName'])],

@@ -8,7 +8,8 @@
     ],
     "require": {
         "php": "^7.2.27",
-        "doctrine/orm": "2.7"
+        "doctrine/orm": "2.7",
+        "jms/serializer": "^3.8"
     },
     "autoload": {
         "psr-4": {

@@ -6,15 +6,13 @@ namespace SimplePhpCrud\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Events;
 use Doctrine\ORM\Query;
-use SimplePhpCrud\Entity\Cliente;
+use SimplePhpCrud\Entity\Log;
 
 /**
- * Class ClienteRepository
+ * Class LogRepository
  */
-class ClienteRepository
+class LogRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -22,7 +20,7 @@ class ClienteRepository
     private $entityManager;
 
     /**
-     * ClienteRepository constructor.
+     * LogRepository constructor.
      *
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
@@ -32,11 +30,11 @@ class ClienteRepository
     }
 
     /**
-     * @param \SimplePhpCrud\Entity\Cliente $cliente
+     * @param \SimplePhpCrud\Entity\Log $log
      */
-    public function persist(Cliente $cliente): void
+    public function persist(Log $log): void
     {
-        $this->entityManager->merge($cliente);
+        $this->entityManager->merge($log);
         $this->entityManager->flush();
     }
 
@@ -49,8 +47,8 @@ class ClienteRepository
     public function findBy(Criteria $criteria): array
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->select('c.cpf,c.email,c.nomeCompleto,c.telefone')
-           ->from(Cliente::class, 'c')
+        $qb->select('l.userId,l.changedDb,l.change')
+           ->from(Log::class, 'l')
            ->addCriteria($criteria);
 
         return $qb->getQuery()
@@ -60,25 +58,16 @@ class ClienteRepository
     /**
      * @param \Doctrine\Common\Collections\Criteria $criteria
      *
-     * @param \SimplePhpCrud\Entity\Cliente         $cliente
-     *
      * @return int
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function deleteBy(Criteria $criteria, Cliente $cliente): int
+    public function deleteBy(Criteria $criteria): int
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->delete(Cliente::class, 'cliente')
+        $qb->delete(Log::class, 'log')
            ->addCriteria($criteria);
 
-        $queryResult = $qb->getQuery()
-                          ->execute();
-        if ($queryResult) {
-            $eventArgs = new LifecycleEventArgs($cliente, $this->entityManager);
-            $this->entityManager->getEventManager()
-                                ->dispatchEvent(Events::postRemove, $eventArgs);
-        }
-
-        return $queryResult;
+        return $qb->getQuery()
+                  ->execute();
     }
 }

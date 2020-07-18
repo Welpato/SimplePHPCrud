@@ -18,4 +18,4 @@ E a partir disso para inicie a aplicação através do comando:
 ## Requerimentos
 - PHP ^7.2.27
 - Doctrine 2.7
-
+- JMS Serializer ^3.8

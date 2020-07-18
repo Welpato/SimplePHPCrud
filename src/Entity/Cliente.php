@@ -11,6 +11,7 @@ use SimplePhpCrud\Validation\ClienteValidation;
  * Class Cliente/
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
  *     name="cliente",
  *     options={"comment"="Guarda informações basicas do cliente"}
@@ -32,11 +33,11 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Id
      * @ORM\Column(
      *     type="string",
      *     length=150,
-     *     options={"comment"="Email do cliente"}
+     *     options={"comment"="Email do cliente"},
+     *     unique=true
      * )
      */
     private $email;
@@ -48,7 +49,8 @@ class Cliente
      * @ORM\Column(
      *     type="string",
      *     length=11,
-     *     options={"comment"="CPF do cliente"}
+     *     options={"comment"="CPF do cliente"},
+     *     unique=true
      * )
      */
     private $cpf;
@@ -130,8 +132,8 @@ class Cliente
     }
 
     /**
-     * @PrePersist
-     * @PreUpdate
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      * @throws \Exception
      */
     public function validate(): void

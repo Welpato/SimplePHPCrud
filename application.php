@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use SimplePhpCrud\BusinessCase\ClienteBusinessCase;
+use \SimplePhpCrud\EventSubscribers\ClienteSubscriber;
 
 require_once "vendor/autoload.php";
 require_once "bootstrap.php";
 
+$entityManager->getEventManager()->addEventSubscriber(new ClienteSubscriber());
 $clienteBusinessCase = new ClienteBusinessCase($entityManager);
 
 $running = true;
