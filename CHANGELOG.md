@@ -1,3 +1,9 @@
+# v1.2.1
+
+    2020-07-19 Wesley Osorio
+    
+        * Improving "Nome Completo" field validation
+
 # v1.2.0
 
     2020-07-18 Wesley Osorio

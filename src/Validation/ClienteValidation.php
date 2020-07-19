@@ -16,9 +16,10 @@ class ClienteValidation
      */
     public static function isValidNomeCompleto(string $nomeCompleto): bool
     {
+        $pregResult = preg_match('/^[A-ZÀ-Ÿ][A-zÀ-ÿ\']+\s([A-zÀ-ÿ\']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ\']+$/', $nomeCompleto);
         $lenNome = strlen($nomeCompleto);
 
-        return $lenNome >= 3 && $lenNome <= 150;
+        return $lenNome >= 3 && $lenNome <= 150 && $pregResult;
     }
 
     /**
