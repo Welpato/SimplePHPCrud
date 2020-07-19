@@ -22,5 +22,6 @@ os padrões PSR2 através do comando:
 
 ## Requerimentos
 - PHP ^7.2.27
+- Composer
 - Doctrine 2.7
 - JMS Serializer ^3.8
