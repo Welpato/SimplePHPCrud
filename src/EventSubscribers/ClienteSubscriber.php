@@ -49,6 +49,10 @@ class ClienteSubscriber implements EventSubscriber
         $this->insertLog(Log::CHANGE_TYPE_REMOVE, $args);
     }
 
+    /**
+     * @param string                                 $logType
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
     private function insertLog(string $logType, LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();

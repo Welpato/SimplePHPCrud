@@ -7,7 +7,7 @@ namespace SimplePhpCrud\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Log/
+ * Class Log
  *
  * @ORM\Entity
  * @ORM\Table(

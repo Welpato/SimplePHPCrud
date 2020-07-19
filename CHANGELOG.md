@@ -1,3 +1,9 @@
+# v1.2.1.1
+
+    2020-07-19 Wesley Osorio
+    
+        * Fixing php docs
+        
 # v1.2.1
 
     2020-07-19 Wesley Osorio
