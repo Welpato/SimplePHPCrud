@@ -24,9 +24,9 @@ class ClientBusinessCase
      */
     private $fieldsToFill = [
         ['fieldName' => 'Cpf', 'label' => 'CPF', 'columnName' => 'cpf'],
-        ['fieldName' => 'Email', 'label' => 'E-mail', 'columnName' => 'email'],
-        ['fieldName' => 'FullName', 'label' => 'Nome Completo', 'columnName' => 'fullName'],
-        ['fieldName' => 'Phone', 'label' => 'phone', 'columnName' => 'phone'],
+        ['fieldName' => 'Email', 'label' => 'Email', 'columnName' => 'email'],
+        ['fieldName' => 'FullName', 'label' => 'Full Name', 'columnName' => 'fullName'],
+        ['fieldName' => 'Phone', 'label' => 'Phone', 'columnName' => 'phone'],
     ];
 
     /**
