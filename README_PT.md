@@ -15,7 +15,7 @@ Em seguida é necessário criar o banco dados através do comando:
 
 E a partir disso para inicie a aplicação através do comando:
 
-```php aplication.php```
+```php application.php```
 
 Caso alguma alteração seja realizada você pode tambêm checar se seu código está seguindo 
 os padrões PSR2 através do comando:

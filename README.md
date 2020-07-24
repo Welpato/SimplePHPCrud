@@ -16,7 +16,7 @@ After that for creating the database:
 
 And then finally run the application via:
 
-```php aplication.php```
+```php application.php```
 
 If any change is done in the code you can also check if it is following the PSR2 standard
 using the following command:
