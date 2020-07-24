@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-use SimplePhpCrud\BusinessCase\ClienteBusinessCase;
-use \SimplePhpCrud\EventSubscribers\ClienteSubscriber;
+use SimplePhpCrud\BusinessCase\ClientBusinessCase;
+use \SimplePhpCrud\EventSubscribers\ClientSubscriber;
 
 require_once "vendor/autoload.php";
 require_once "bootstrap.php";
 
 $entityManager->getEventManager()
-              ->addEventSubscriber(new ClienteSubscriber());
-$clienteBusinessCase = new ClienteBusinessCase($entityManager);
+              ->addEventSubscriber(new ClientSubscriber());
+$ClientBusinessCase = new ClientBusinessCase($entityManager);
 
 $running = true;
 while ($running) {
-    print "Olá! Escolha uma das seguintes opções:\n
-    0 - Sair da aplicação.
-    1 - Cadastrar/atualizar um cliente.
-    2 - Pesquisar por informações de um cliente.
-    3 - Deletar um cliente existente.\n";
+    print "Hello! Choose one of the following options:\n
+    0 - Exit.
+    1 - Create/Update a client.
+    2 - Search a client.
+    3 - Delete a client.\n";
     $handle = fopen("php://stdin", "r");
     $value = trim(fgets($handle));
     fclose($handle);
@@ -27,16 +27,16 @@ while ($running) {
             $running = false;
             break;
         case 1:
-            $clienteBusinessCase->createUpdateCliente();
+            $ClientBusinessCase->createUpdateClient();
             break;
         case 2:
-            $clienteBusinessCase->findClient();
+            $ClientBusinessCase->findClient();
             break;
         case 3:
-            $clienteBusinessCase->deleteCliente();
+            $ClientBusinessCase->deleteClient();
             break;
         default:
-            echo 'Opção inválida!';
+            echo 'Invalid option!';
             break;
     }
 }

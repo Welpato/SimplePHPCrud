@@ -7,17 +7,17 @@ namespace SimplePhpCrud\BusinessCase;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\QueryException;
-use SimplePhpCrud\Entity\Cliente;
-use SimplePhpCrud\Repository\ClienteRepository;
-use SimplePhpCrud\Validation\ClienteValidation;
+use SimplePhpCrud\Entity\Client;
+use SimplePhpCrud\Repository\ClientRepository;
+use SimplePhpCrud\Validation\ClientValidation;
 
 /**
- * Class ClienteBusinessCase
+ * Class ClientBusinessCase
  */
-class ClienteBusinessCase
+class ClientBusinessCase
 {
-    private const EXIT_STRING = 'SAIR';
-    private const INSERT_BASE_MESSAGE = "Por favor informe o %s do cliente:\n";
+    private const EXIT_STRING = 'EXIT';
+    private const INSERT_BASE_MESSAGE = "Please inform %s of the client:\n";
 
     /**
      * @var array
@@ -25,53 +25,53 @@ class ClienteBusinessCase
     private $fieldsToFill = [
         ['fieldName' => 'Cpf', 'label' => 'CPF', 'columnName' => 'cpf'],
         ['fieldName' => 'Email', 'label' => 'E-mail', 'columnName' => 'email'],
-        ['fieldName' => 'NomeCompleto', 'label' => 'Nome Completo', 'columnName' => 'nomeCompleto'],
-        ['fieldName' => 'Telefone', 'label' => 'Telefone', 'columnName' => 'telefone'],
+        ['fieldName' => 'FullName', 'label' => 'Nome Completo', 'columnName' => 'fullName'],
+        ['fieldName' => 'Phone', 'label' => 'phone', 'columnName' => 'phone'],
     ];
 
     /**
-     * @var \SimplePhpCrud\Repository\ClienteRepository
+     * @var \SimplePhpCrud\Repository\ClientRepository
      */
     private $repository;
 
     /**
-     * ClienteBusinessCase constructor.
+     * ClientBusinessCase constructor.
      *
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->repository = new ClienteRepository($entityManager);
+        $this->repository = new ClientRepository($entityManager);
     }
 
     /**
-     * Insert/Update a new Cliente in the database
+     * Insert/Update a new Client in the database
      */
-    public function createUpdateCliente(): void
+    public function createUpdateClient(): void
     {
-        $clienteEntity = new Cliente();
+        $ClientEntity = new Client();
         foreach ($this->fieldsToFill as $field) {
             $result = $this->getCreateInput(
                 sprintf(self::INSERT_BASE_MESSAGE, $field['label']),
-                [ClienteValidation::class, sprintf('isValid%s', $field['fieldName'])],
-                [$clienteEntity, sprintf('set%s', $field['fieldName'])]
+                [ClientValidation::class, sprintf('isValid%s', $field['fieldName'])],
+                [$ClientEntity, sprintf('set%s', $field['fieldName'])]
             );
             if (!$result) {
-                print "Retornando ao menu principal.";
+                print "Returning to the main menu.";
 
                 return;
             }
         }
-        $this->repository->persist($clienteEntity);
-        print "Novo cliente cadastrado com sucesso!\n";
+        $this->repository->persist($ClientEntity);
+        print "New client registered with success!\n";
     }
 
     /**
-     * Search and show a list of Clientes
+     * Search and show a list of Clients
      */
     public function findClient(): void
     {
-        $message = "Pesquisar cliente por:\n";
+        $message = "Search client by:\n";
         foreach ($this->fieldsToFill as $index => $field) {
             $message .= sprintf("%s - %s\n", $index, $field['label']);
         }
@@ -91,7 +91,7 @@ class ClienteBusinessCase
             if (!empty($result)) {
                 $this->printTable($result);
             } else {
-                print "\nDados não encontrados!\n\n";
+                print "\nData not find!\n\n";
             }
         } catch (QueryException $e) {
             print $e->getMessage();
@@ -99,13 +99,13 @@ class ClienteBusinessCase
     }
 
     /**
-     * Delete process of an Cliente entity
+     * Delete process of an Client entity
      */
-    public function deleteCliente(): void
+    public function deleteClient(): void
     {
         $value = $this->getConsoleInput(
             sprintf(
-                "Você deseja deletar um cliente usando:\n 0 - %s\n 1 - %s\n",
+                "Deleting client using:\n 0 - %s\n 1 - %s\n",
                 $this->fieldsToFill[0]['label'],
                 $this->fieldsToFill[1]['label']
             )
@@ -113,14 +113,14 @@ class ClienteBusinessCase
         if (null === $value) {
             return;
         }
-        $cliente = new Cliente();
+        $Client = new Client();
         switch ($value) {
             case 0:
             case 1:
-                $criteria = $this->generateCriteria((int)$value, $cliente);
+                $criteria = $this->generateCriteria((int)$value, $Client);
                 break;
             default:
-                print "Campo inválido!\n";
+                print "Invalid field!\n";
 
                 return;
                 break;
@@ -131,10 +131,10 @@ class ClienteBusinessCase
         }
 
         try {
-            if ($this->repository->deleteBy($criteria, $cliente)) {
-                print "Cliente deletado com sucesso!\n";
+            if ($this->repository->deleteBy($criteria, $Client)) {
+                print "Client deleted with success!\n";
             } else {
-                print "Erro ao deletar o cliente.\n";
+                print "Error while deleting client.\n";
             }
         } catch (QueryException $e) {
             print $e->getMessage();
@@ -157,7 +157,7 @@ class ClienteBusinessCase
         }
 
         if (!$validationFunction($value)) {
-            print "Campo inválido! Preencha novamente.\n";
+            print "Invalid field! Please fill it again.\n";
             $this->getCreateInput($message, $validationFunction, $setFunction);
         } else {
             $setFunction($value);
@@ -174,7 +174,7 @@ class ClienteBusinessCase
     private function getConsoleInput(string $message): ?string
     {
         print $message;
-        print sprintf("(Ou digite %s para voltar ao menu principal)\n", self::EXIT_STRING);
+        print sprintf("(Or type %s to go back to the main menu)\n", self::EXIT_STRING);
         $handle = fopen("php://stdin", "r");
         $value = trim(fgets($handle));
         fclose($handle);
@@ -189,25 +189,25 @@ class ClienteBusinessCase
     /**
      * @param int                                $fieldIndex
      *
-     * @param \SimplePhpCrud\Entity\Cliente|null $clienteEntity
+     * @param \SimplePhpCrud\Entity\Client|null $ClientEntity
      *
      * @return \Doctrine\Common\Collections\Criteria|null
      */
-    private function generateCriteria(int $fieldIndex, ?Cliente &$clienteEntity = null): ?Criteria
+    private function generateCriteria(int $fieldIndex, ?Client &$ClientEntity = null): ?Criteria
     {
         $criteria = Criteria::create();
-        if (null === $clienteEntity) {
-            $clienteEntity = new Cliente();
+        if (null === $ClientEntity) {
+            $ClientEntity = new Client();
         }
         $checkInput = $this->getCreateInput(
             sprintf(self::INSERT_BASE_MESSAGE, $this->fieldsToFill[$fieldIndex]['label']),
-            [ClienteValidation::class, sprintf('isValid%s', $this->fieldsToFill[$fieldIndex]['fieldName'])],
-            [$clienteEntity, sprintf('set%s', $this->fieldsToFill[$fieldIndex]['fieldName'])]
+            [ClientValidation::class, sprintf('isValid%s', $this->fieldsToFill[$fieldIndex]['fieldName'])],
+            [$ClientEntity, sprintf('set%s', $this->fieldsToFill[$fieldIndex]['fieldName'])]
         );
         if (!$checkInput) {
             return null;
         }
-        $getFieldFunction = [$clienteEntity, sprintf('get%s', $this->fieldsToFill[$fieldIndex]['fieldName'])];
+        $getFieldFunction = [$ClientEntity, sprintf('get%s', $this->fieldsToFill[$fieldIndex]['fieldName'])];
         $criteria->where(
             Criteria::expr()
                     ->eq($this->fieldsToFill[$fieldIndex]['columnName'], $getFieldFunction())

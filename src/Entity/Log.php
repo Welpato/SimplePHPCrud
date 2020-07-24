@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(
  *     name="log",
- *     options={"comment"="Tabela que guarda o log das principais alterações"}
+ *     options={"comment"="This table carries the logs of the most important changes"}
  * )
  */
 class Log
@@ -29,7 +29,7 @@ class Log
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(
      *     type="integer",
-     *     options={"comment"="id do log"}
+     *     options={"comment"="Log id"}
      * )
      */
     private $id;
@@ -39,8 +39,11 @@ class Log
      *
      * @ORM\Column(
      *     type="integer",
-     *     options={"comment"="Uma FK que poderia ser utilizada para caso existisse um controle de usuarios"}
+     *     options={"comment"="User that did the change"}
      * )
+     *
+     * Since there is no user control in this simple app
+     * This field is just used as an example.
      */
     private $userId;
 
@@ -50,7 +53,7 @@ class Log
      * @ORM\Column(
      *     type="string",
      *     length=40,
-     *     options={"comment"="Nome da tabela em que a alteração foi realizada"}
+     *     options={"comment"="A table which the change happened"}
      * )
      */
     private $changedDb;
@@ -62,7 +65,7 @@ class Log
      * @ORM\Column(
      *     type="string",
      *     length=15,
-     *     options={"comment"="Tipo da alteração realizada"}
+     *     options={"comment"="Type of change done"}
      * )
      */
     private $changeType;
@@ -73,7 +76,7 @@ class Log
      * @ORM\Column(
      *     type="string",
      *     length=500,
-     *     options={"comment"="Entidate da alteração realizada"}
+     *     options={"comment"="JSON representation of the new state of the entity"}
      * )
      */
     private $change;

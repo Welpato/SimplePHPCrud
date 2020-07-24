@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace SimplePhpCrud\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use SimplePhpCrud\Validation\ClienteValidation;
+use SimplePhpCrud\Validation\ClientValidation;
 
 /**
- * Class Cliente/
+ * Class Client/
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
- *     name="cliente",
- *     options={"comment"="Guarda informações basicas do cliente"}
+ *     name="Client",
+ *     options={"comment"="Holds the client information"}
  * )
  */
-class Cliente
+class Client
 {
     /**
      * @var string
@@ -25,10 +25,10 @@ class Cliente
      * @ORM\Column(
      *     type="string",
      *     length=150,
-     *     options={"comment"="Nome completo do cliente"}
+     *     options={"comment"="Client full name"}
      * )
      */
-    private $nomeCompleto;
+    private $fullName;
 
     /**
      * @var string
@@ -36,7 +36,7 @@ class Cliente
      * @ORM\Column(
      *     type="string",
      *     length=150,
-     *     options={"comment"="Email do cliente"},
+     *     options={"comment"="Client email"},
      *     unique=true
      * )
      */
@@ -49,9 +49,14 @@ class Cliente
      * @ORM\Column(
      *     type="string",
      *     length=11,
-     *     options={"comment"="CPF do cliente"},
+     *     options={"comment"="Client CPF"},
      *     unique=true
      * )
+     *
+     * CPF is the national ID number in Brazil,
+     * and it is a very good example of how to apply some validation logic.
+     * Since this id number follow up a quite complex validation process
+     * as you can see in the ClientValidation class
      */
     private $cpf;
 
@@ -62,25 +67,27 @@ class Cliente
      *     type="string",
      *     length=11,
      *     nullable=true,
-     *     options={"comment"="Telefone do cliente"}
+     *     options={"comment"="Client phone number"}
      * )
+     *
+     * This field validation is also following the local Brazilian phone number standard
      */
-    private $telefone;
+    private $phone;
 
     /**
      * @return string
      */
-    public function getNomeCompleto(): string
+    public function getFullName(): string
     {
-        return $this->nomeCompleto;
+        return $this->fullName;
     }
 
     /**
-     * @param string $nomeCompleto
+     * @param string $fullName
      */
-    public function setNomeCompleto($nomeCompleto): void
+    public function setFullName($fullName): void
     {
-        $this->nomeCompleto = $nomeCompleto;
+        $this->fullName = $fullName;
     }
 
     /**
@@ -118,17 +125,17 @@ class Cliente
     /**
      * @return string
      */
-    public function getTelefone(): string
+    public function getPhone(): string
     {
-        return $this->telefone;
+        return $this->phone;
     }
 
     /**
-     * @param string $telefone
+     * @param string $phone
      */
-    public function setTelefone($telefone): void
+    public function setPhone($phone): void
     {
-        $this->telefone = $telefone;
+        $this->phone = $phone;
     }
 
     /**
@@ -138,20 +145,20 @@ class Cliente
      */
     public function validate(): void
     {
-        if (!ClienteValidation::isValidNomeCompleto($this->nomeCompleto)) {
-            throw new \Exception('Nome inválido!');
+        if (!ClientValidation::isValidFullName($this->fullName)) {
+            throw new \Exception('Invalid name!');
         }
 
-        if (!ClienteValidation::isValidEmail($this->email)) {
-            throw new \Exception('E-mail inválido!');
+        if (!ClientValidation::isValidEmail($this->email)) {
+            throw new \Exception('Invalid email!');
         }
 
-        if (!ClienteValidation::isValidCpf($this->cpf)) {
-            throw new \Exception('CPF inválido!');
+        if (!ClientValidation::isValidCpf($this->cpf)) {
+            throw new \Exception('Invalid CPF!');
         }
 
-        if (!ClienteValidation::isValidTelefone($this->telefone)) {
-            throw new \Exception('Telefone inválido!');
+        if (!ClientValidation::isValidPhone($this->phone)) {
+            throw new \Exception('Invalid phone number');
         }
     }
 }

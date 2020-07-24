@@ -8,14 +8,14 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use JMS\Serializer\SerializerBuilder;
-use SimplePhpCrud\Entity\Cliente;
+use SimplePhpCrud\Entity\Client;
 use SimplePhpCrud\Entity\Log;
 use SimplePhpCrud\Repository\LogRepository;
 
 /**
- * Class ClienteSubscriber
+ * Class ClientSubscriber
  */
-class ClienteSubscriber implements EventSubscriber
+class ClientSubscriber implements EventSubscriber
 {
     /**
      * @return array
@@ -57,7 +57,7 @@ class ClienteSubscriber implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if (!$entity instanceof Cliente) {
+        if (!$entity instanceof Client) {
             return;
         }
 
@@ -65,7 +65,7 @@ class ClienteSubscriber implements EventSubscriber
         $log = new Log();
         //Since there is no user control it will be always set userId 1
         $log->setUserId(1);
-        $log->setChangedDb('cliente');
+        $log->setChangedDb('Client');
         $log->setChangeType($logType);
         $serializer = SerializerBuilder::create()
                                        ->build();

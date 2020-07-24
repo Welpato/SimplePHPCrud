@@ -1,26 +1,29 @@
-# Descrição
-Este é um simples CRUD via linha de comando para cadastro de clientes 
-usando apenas PHP e a ORM Doctrine para a manipulação de entidates e bancos de dados.
+# Description
+This is a simple command-line CRUD system for client registration using only
+PHP and the ORM Doctrine for the database control. 
+The objective of this application is just to work as an example on how easy is to
+create databases and execute the whole CRUD process just using Doctrine.
 
-## Como executar a aplicação
-Para executar a aplicação é necesserio apenas  realizar a instalação dos requisitos via composer com o comando:
+## How to execute it
+To execute this app you need to have ```composer``` installed in your machine
+and execute the following commands:
 
 ```composer install```
 
-Em seguida é necessário criar o banco dados através do comando:
+After that for creating the database:
 
 ```vendor/bin/doctrine orm:schema-tool:create```
 
-E a partir disso para inicie a aplicação através do comando:
+And then finally run the application via:
 
 ```php aplication.php```
 
-Caso alguma alteração seja realizada você pode tambêm checar se seu código está seguindo 
-os padrões PSR2 através do comando:
+If any change is done in the code you can also check if it is following the PSR2 standard
+using the following command:
 
 ```composer run phpcs```
 
-## Requerimentos
+## Requirements
 - PHP ^7.2.27
 - Composer
 - Doctrine 2.7

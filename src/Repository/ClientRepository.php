@@ -9,12 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Query;
-use SimplePhpCrud\Entity\Cliente;
+use SimplePhpCrud\Entity\Client;
 
 /**
- * Class ClienteRepository
+ * Class ClientRepository
  */
-class ClienteRepository
+class ClientRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -22,7 +22,7 @@ class ClienteRepository
     private $entityManager;
 
     /**
-     * ClienteRepository constructor.
+     * ClientRepository constructor.
      *
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
@@ -32,11 +32,11 @@ class ClienteRepository
     }
 
     /**
-     * @param \SimplePhpCrud\Entity\Cliente $cliente
+     * @param \SimplePhpCrud\Entity\Client $Client
      */
-    public function persist(Cliente $cliente): void
+    public function persist(Client $Client): void
     {
-        $this->entityManager->merge($cliente);
+        $this->entityManager->merge($Client);
         $this->entityManager->flush();
     }
 
@@ -49,8 +49,8 @@ class ClienteRepository
     public function findBy(Criteria $criteria): array
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->select('c.cpf,c.email,c.nomeCompleto,c.telefone')
-           ->from(Cliente::class, 'c')
+        $qb->select('c.cpf,c.email,c.fullName,c.phone')
+           ->from(Client::class, 'c')
            ->addCriteria($criteria);
 
         return $qb->getQuery()
@@ -60,21 +60,21 @@ class ClienteRepository
     /**
      * @param \Doctrine\Common\Collections\Criteria $criteria
      *
-     * @param \SimplePhpCrud\Entity\Cliente         $cliente
+     * @param \SimplePhpCrud\Entity\Client         $Client
      *
      * @return int
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function deleteBy(Criteria $criteria, Cliente $cliente): int
+    public function deleteBy(Criteria $criteria, Client $Client): int
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->delete(Cliente::class, 'cliente')
+        $qb->delete(Client::class, 'Client')
            ->addCriteria($criteria);
 
         $queryResult = $qb->getQuery()
                           ->execute();
         if ($queryResult) {
-            $eventArgs = new LifecycleEventArgs($cliente, $this->entityManager);
+            $eventArgs = new LifecycleEventArgs($Client, $this->entityManager);
             $this->entityManager->getEventManager()
                                 ->dispatchEvent(Events::postRemove, $eventArgs);
         }

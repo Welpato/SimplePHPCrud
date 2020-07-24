@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace SimplePhpCrud\Validation;
 
 /**
- * Class ClienteValidation
+ * Class ClientValidation
  */
-class ClienteValidation
+class ClientValidation
 {
     /**
-     * @param string $nomeCompleto
+     * @param string $fullName
      *
      * @return bool
      */
-    public static function isValidNomeCompleto(string $nomeCompleto): bool
+    public static function isValidFullName(string $fullName): bool
     {
-        $pregResult = preg_match('/^[A-ZÀ-Ÿ][A-zÀ-ÿ\']+\s([A-zÀ-ÿ\']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ\']+$/', $nomeCompleto);
-        $lenNome = strlen($nomeCompleto);
+        $pregResult = preg_match('/^[A-ZÀ-Ÿ][A-zÀ-ÿ\']+\s([A-zÀ-ÿ\']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ\']+$/', $fullName);
+        $lenNome = strlen($fullName);
 
         return $lenNome >= 3 && $lenNome <= 150 && $pregResult;
     }
@@ -57,16 +57,16 @@ class ClienteValidation
     }
 
     /**
-     * @param string $telefone
+     * @param string $phone
      *
      * @return bool
      */
-    public static function isValidTelefone(?string $telefone): bool
+    public static function isValidPhone(?string $phone): bool
     {
-        if (empty($telefone)) {
+        if (empty($phone)) {
             return true;
         }
 
-        return is_numeric($telefone) && strlen($telefone) === 11;
+        return is_numeric($phone) && strlen($phone) === 11;
     }
 }
